@@ -7,12 +7,14 @@ import { IImageRepository } from './src/domain/IImageRepository';
 import { ImageRepository } from './src/infrastructure/ImageRepository';
 import { ExtractCSVInfo } from './src/applications/UploadCsv/ExtractCSVInfo';
 import { Worker } from './src/applications/WorkerFactory/Workers';
+import { ImageProcessingWorker } from './src/applications/WorkerFactory/ImageProcessingWorker';
 
 
 const container = new Container();
 
 container.bind(Database).toSelf().inSingletonScope();
 container.bind<UploadCsv>('uploadCsv').to(UploadCsv);
+container.bind<ImageProcessingWorker>('imageProcessingWorker').to(ImageProcessingWorker);
 container.bind<ExtractCSVInfo>('extractCsv').to(ExtractCSVInfo);
 
 container.bind<IStorageService>('storageService').to(StorageService);
@@ -20,5 +22,6 @@ container.bind<IStorageService>('storageService').to(StorageService);
 
 container.bind<IImageRepository>('imageRepository').to(ImageRepository);
 container.bind(Worker).toSelf().inSingletonScope();
+
 
 export{ container }

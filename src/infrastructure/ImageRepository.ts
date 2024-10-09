@@ -16,4 +16,9 @@ export class ImageRepository implements IImageRepository {
 
         return result[0].request_id;
     }
+
+   async getCsvFile() {
+        const result = await this.db.query('SELECT * FROM images.imagefiles WHERE job_id IS NULL LIMIT 1');
+        return result[0];
+    }
 }
