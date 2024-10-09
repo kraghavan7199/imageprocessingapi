@@ -15,7 +15,6 @@ export class UploadController extends BaseHttpController {
 
     @httpPost('', upload.single('file'))
     public async uploadImageCsv(@request() req: express.Request, @response() res: express.Response) {
-
         const { SUCCESS, BADREQUEST } = this.uploadCsv.outputs;
         this.uploadCsv.on(SUCCESS, result => res.json(result))
         await this.uploadCsv.execute(req.file)
