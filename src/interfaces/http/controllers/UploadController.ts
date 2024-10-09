@@ -23,7 +23,7 @@ export class UploadController extends BaseHttpController {
     @httpGet('')
     public async sit(@request() req: express.Request, @response() res: express.Response) {
 
-        this.extractCsv.execute()
+        // this.extractCsv.execute()
     }
 
 }
