@@ -7,13 +7,23 @@ import { OptimizeImageWorker } from "./OptimizeImageWorker";
 @injectable()
 export class Worker {
 
-    constructor(@inject('imageProcessingWorker') private uploadCsv: ImageProcessingWorker,
-    @inject('optimizeImageWorker') private optimizeImageWorker: OptimizeImageWorker){}
+  constructor(@inject('imageProcessingWorker') private uploadCsv: ImageProcessingWorker,
+    @inject('optimizeImageWorker') private optimizeImageWorker: OptimizeImageWorker) { }
 
-     scheduleTasks() {
-      // this.uploadCsv.execute();
-     // this.optimizeImageWorker.execute();
-    }
+  scheduleTasks() {
+  }
+
+  scheduleImageOptimizerTask() {
+    cron.schedule('* * * * *', () => {
+      this.optimizeImageWorker.execute();
+    });
+  }
+
+  scheduleProductImageUploadTask() {
+    cron.schedule('* * * * *', () => {
+      this.uploadCsv.execute();
+    });
+  }
 
 
 }

@@ -1,3 +1,5 @@
+
+
 export interface IOptimizeService {
-    optimizeImages(data: any): any;
+    optimizeImages(data: any, jobId: string): any;
 }

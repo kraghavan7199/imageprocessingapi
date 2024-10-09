@@ -24,7 +24,7 @@ export class ImageRepository implements IImageRepository {
         return result[0];
     }
 
-    async getProductImages(limit: number) {
+    async getUnoptimizedProductImages(limit: number) {
         const result = await this.db.query('SELECT * FROM images.productimages WHERE jobid IS NULL LIMIT $1', [limit]);
         return result;
     }

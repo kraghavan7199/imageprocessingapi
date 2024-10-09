@@ -8,14 +8,14 @@ export class Database {
     constructor() {
 
         this.pool = new Pool({
-            user: 'postgres',         
-            host: 'localhost',        
-            database: 'postgres', 
-            password: 'postgres',   
+            user: 'eshop',         
+            host: '192.168.1.57',        
+            database: 'eshop', 
+            password: 'eshop',   
             port: 5432,     
           });
 
-   
+
     }
 
     async query(text: string, params?: any[]) {

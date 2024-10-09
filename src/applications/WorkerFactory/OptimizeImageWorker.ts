@@ -5,6 +5,7 @@ import { ExtractCSVInfo } from "../UploadCsv/ExtractCSVInfo";
 import { v4 as uuidv4 } from 'uuid';
 import { Operation } from "../Operation";
 import { IOptimizeService } from "../../domain/IOptimizeService";
+import { UUID } from "crypto";
 
 const BATCH_LIMIT  = 50;
 @injectable()
@@ -17,9 +18,8 @@ export class OptimizeImageWorker {
    async execute() {
 
     const jobId = uuidv4();
-    const a = await this.imageRepository.getProductImages(BATCH_LIMIT);
-    await this.optimizeService.optimizeImages(a);
- 
+    const products = await this.imageRepository.getUnoptimizedProductImages(BATCH_LIMIT);
+    const productsWithOptimizedImage = await this.optimizeService.optimizeImages(products, jobId);
     }
 
 
