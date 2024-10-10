@@ -14,6 +14,7 @@ export class OptimizeImageWorker {
     }
 
     async execute() {
+        console.log('called*****')
         const job = await this.imageRepository.getOptimizerJobToComplete();
         if (job) {
             const products = await this.imageRepository.getUnoptimizedProductImagesByRequestId(job.request_id, BATCH_LIMIT);
