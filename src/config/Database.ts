@@ -6,7 +6,7 @@ export class Database {
     private pool: Pool;
 
     constructor() {
-
+        console.log(process.env.DATABASE_URL)
         this.pool = new Pool({
             connectionString : process.env.DATABASE_URL
           });
