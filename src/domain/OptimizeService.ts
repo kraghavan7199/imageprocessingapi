@@ -32,7 +32,7 @@ export class OptimizeService implements IOptimizeService {
 
                 const tempFile: Express.Multer.File = {
                     fieldname: 'file',
-                    originalname: 'optimized-image ' + index,
+                    originalname: 'optimized-image-' + index,
                     encoding: '7bit',
                     mimetype: 'image/jpeg',
                     buffer: compressedImage,

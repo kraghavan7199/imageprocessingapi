@@ -28,7 +28,8 @@ export class StorageService {
         const bucket = this.storage.bucket(this.bucketName);
         const blob = bucket.file(file.originalname);
         const blobStream = blob.createWriteStream({
-            resumable: false
+            resumable: false,
+            contentType: file.mimetype || 'image/jpeg'
         });
 
         return new Promise((resolve, reject) => {
