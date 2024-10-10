@@ -16,7 +16,7 @@ export class GetRequestStatus extends Operation {
         try {
 
             if (!validate(requestId) || version(requestId) !== 4) {
-                this.emit(BADREQUEST, new Error('Invalid requestId'));
+                this.emit(BADREQUEST, {message: 'Invalid Request Id'});
                 return;
             }
 

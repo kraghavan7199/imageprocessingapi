@@ -23,8 +23,6 @@ export class StatusController extends BaseHttpController {
 
         const reqId = req.params.reqId;
 
-        console.log(reqId)
-
        await this.getRequestStatusFeature.execute(reqId);
 
     }
