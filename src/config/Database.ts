@@ -8,10 +8,7 @@ export class Database {
     constructor() {
         console.log(process.env.DATABASE_URL)
         this.pool = new Pool({
-            connectionString : process.env.DATABASE_URL,
-            ssl: {
-                rejectUnauthorized: true
-            }
+            connectionString : process.env.DATABASE_URL
           });
 
 
