@@ -25,8 +25,7 @@ export class WebhookController extends BaseHttpController {
 
     @httpPost('')
     public async test(@request() req: express.Request, @response() res: express.Response) {
-        
-        console.log(req)
+        console.log('for test')
 
     }
 
