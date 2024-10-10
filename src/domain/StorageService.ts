@@ -34,7 +34,6 @@ export class StorageService {
 
         return new Promise((resolve, reject) => {
             blobStream.on('error', (err) => { 
-                console.log(err)
                 reject(err)});
             blobStream.on('finish', async () => {
                 const publicUrl = `https://storage.googleapis.com/${this.bucketName}/${blob.name}`;

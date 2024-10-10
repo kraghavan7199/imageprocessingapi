@@ -34,9 +34,7 @@ export class UploadCsv extends Operation {
           .on('data', (row) => {
             if (this.validateRow(row)) {
               results.push(row);
-            } else {
-              console.error(`Invalid row format: ${JSON.stringify(row)}`);
-            }
+            } 
           })
           .on('end', resolve)
           .on('error', reject);
