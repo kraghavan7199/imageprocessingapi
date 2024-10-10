@@ -8,11 +8,7 @@ export class Database {
     constructor() {
 
         this.pool = new Pool({
-            user: 'postgres',         
-            host: 'localhost',        
-            database: 'postgres', 
-            password: 'postgres',   
-            port: 5432,     
+            connectionString : process.env.DATABASE_URL
           });
 
 
