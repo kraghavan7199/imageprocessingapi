@@ -1,9 +1,9 @@
 import { BaseHttpController, controller, httpGet, httpPost, request, requestParam, response } from 'inversify-express-utils';
 import { inject } from 'inversify';
 import * as express from 'express';
+import * as HttpStatus from 'http-status';
 import multer from 'multer';
 import { UploadCsv } from '../../../applications/UploadCsv/UploadCsv';
-import { ExtractCSVInfo } from '../../../applications/UploadCsv/ExtractCSVInfo';
 
 const upload = multer({ storage: multer.memoryStorage() });
 
@@ -11,19 +11,18 @@ const upload = multer({ storage: multer.memoryStorage() });
 export class UploadController extends BaseHttpController {
 
     @inject('uploadCsv') private uploadCsv!: UploadCsv;
-    @inject('extractCsv') private extractCsv!: ExtractCSVInfo;
 
     @httpPost('', upload.single('file'))
     public async uploadImageCsv(@request() req: express.Request, @response() res: express.Response) {
-        const { SUCCESS, BADREQUEST } = this.uploadCsv.outputs;
-        this.uploadCsv.on(SUCCESS, result => res.json(result))
-        await this.uploadCsv.execute(req.file)
-    }
+        const { SUCCESS, BADREQUEST , ERROR} = this.uploadCsv.outputs;
 
-    @httpGet('')
-    public async sit(@request() req: express.Request, @response() res: express.Response) {
+        this.uploadCsv.on(SUCCESS, result => res.json(result));
 
-        // this.extractCsv.execute()
+        this.uploadCsv.on(BADREQUEST, err => res.status(HttpStatus.BAD_REQUEST).send(err));
+
+        this.uploadCsv.on(ERROR, err => { throw (err); });
+
+        await this.uploadCsv.execute(req.file || null)
     }
 
 }

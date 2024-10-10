@@ -1,13 +1,9 @@
-import { Storage } from '@google-cloud/storage';
 import { inject, injectable } from 'inversify';
-import path from 'path';
-import { v4 as uuidv4 } from 'uuid';
 import { IOptimizeService } from './IOptimizeService';
 import axios from 'axios';
 import { PassThrough, Readable } from 'stream';
 import sharp from 'sharp';
 import { IStorageService } from './IStorageService';
-import { UUID } from 'crypto';
 
 
 @injectable()
@@ -17,11 +13,11 @@ export class OptimizeService implements IOptimizeService {
     }
 
 
-    optimizeImages(products: any, jobId: string) {
+    optimizeImages(products: any) {
         return Promise.all(products.map(async (product: any) => {
             const imageUrls = product.image_urls;
             const optimizedUrls = await this.getOptimizedImageUrls(imageUrls);
-            return { ...product, optimized_urls: optimizedUrls, jobid: jobId }
+            return { ...product, optimized_urls: optimizedUrls }
         }))
     }
 
@@ -36,7 +32,7 @@ export class OptimizeService implements IOptimizeService {
 
                 const tempFile: Express.Multer.File = {
                     fieldname: 'file',
-                    originalname: 'sw' + index,
+                    originalname: 'optimized-image ' + index,
                     encoding: '7bit',
                     mimetype: 'image/jpeg',
                     buffer: compressedImage,

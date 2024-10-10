@@ -1,16 +1,16 @@
 import { inject, injectable } from "inversify";
 import cron from 'node-cron';
-import { ImageProcessingWorker } from "./ImageProcessingWorker";
 import { OptimizeImageWorker } from "./OptimizeImageWorker";
 
 
 @injectable()
-export class Worker {
+export class WorkerFactory {
 
-  constructor(@inject('imageProcessingWorker') private uploadCsv: ImageProcessingWorker,
+  constructor(
     @inject('optimizeImageWorker') private optimizeImageWorker: OptimizeImageWorker) { }
 
   scheduleTasks() {
+    this.scheduleImageOptimizerTask();
   }
 
   scheduleImageOptimizerTask() {
@@ -19,11 +19,6 @@ export class Worker {
     });
   }
 
-  scheduleProductImageUploadTask() {
-    cron.schedule('* * * * *', () => {
-      this.uploadCsv.execute();
-    });
-  }
 
 
 }

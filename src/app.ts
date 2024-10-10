@@ -2,15 +2,17 @@ import 'reflect-metadata';
 import { InversifyExpressServer } from 'inversify-express-utils';
 import express from 'express';
 import './interfaces/http/controllers/UploadController';
+import './interfaces/http/controllers/StatusController';
+import './interfaces/http/controllers/WebhookController';
 import { container } from '../inversify.config';
 import { Storage } from '@google-cloud/storage';
 import { Database } from './config/Database';
-import { Worker } from './applications/WorkerFactory/Workers';
+import { WorkerFactory } from './applications/Workers/WorkerFactory';
 
 
 const server = new InversifyExpressServer(container);
 const dbService = container.get(Database);
-const worker = container.get(Worker);
+const worker = container.get(WorkerFactory);
 
 dbService.connect();
 worker.scheduleTasks();
