@@ -1,11 +1,12 @@
 import { inject, injectable } from "inversify";
 import { Operation } from "../Operation";
 import { IImageRepository } from "../../domain/IImageRepository";
+import { IWebhookRepository } from "../../domain/IWebhookRepository";
 
 
 @injectable()
 export class RegisterWebhook extends Operation {
-    constructor(@inject('imageRepository') private imageRepository: IImageRepository) {
+    constructor(@inject('webhookRepository') private webhookRepository: IWebhookRepository) {
         super();
         this.setOutputs(['SUCCESS', 'BADREQUEST']);
     }
@@ -14,7 +15,7 @@ export class RegisterWebhook extends Operation {
         const { SUCCESS, BADREQUEST } = this.outputs;
 
         try {
-            const result = await this.imageRepository.insertWebhookUrl(requestId, webhookUrl);
+            const result = await this.webhookRepository.insertWebhookUrl(requestId, webhookUrl);
             if(result) {
                 this.emit(SUCCESS, true);
             }

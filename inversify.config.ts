@@ -11,6 +11,8 @@ import { GetRequestStatus } from './src/applications/Status/GetRequestStatus';
 import { RegisterWebhook } from './src/applications/Webhook/RegisterWebhook';
 import { IStorageService } from './src/domain/IStorageService';
 import { StorageService } from './src/domain/StorageService';
+import { IWebhookRepository } from './src/domain/IWebhookRepository';
+import { WebhookRepository } from './src/infrastructure/WebhookRepository';
 
 
 const container = new Container();
@@ -21,6 +23,7 @@ container.bind<OptimizeImageWorker>('optimizeImageWorker').to(OptimizeImageWorke
 container.bind<GetRequestStatus>('getRequestStatus').to(GetRequestStatus);
 container.bind<IOptimizeService>('optimizeService').to(OptimizeService);
 container.bind<IImageRepository>('imageRepository').to(ImageRepository);
+container.bind<IWebhookRepository>('webhookRepository').to(WebhookRepository);
 container.bind<RegisterWebhook>('registerWebhook').to(RegisterWebhook);
 container.bind(WorkerFactory).toSelf().inSingletonScope();
 container.bind<IStorageService>('storageService').to(StorageService);

@@ -1,9 +1,7 @@
 import { BaseHttpController, controller, httpGet, httpPost, request, response } from 'inversify-express-utils';
 import { inject } from 'inversify';
 import * as express from 'express';
-import { GetRequestStatus } from '../../../applications/Status/GetRequestStatus';
 import { RegisterWebhook } from '../../../applications/Webhook/RegisterWebhook';
-import { REFUSED } from 'dns';
 
 
 @controller('/webhook')
@@ -25,7 +23,7 @@ export class WebhookController extends BaseHttpController {
 
     @httpPost('')
     public async test(@request() req: express.Request, @response() res: express.Response) {
-        console.log('for test')
+        console.log('for test********************************************', req.file)
 
     }
 

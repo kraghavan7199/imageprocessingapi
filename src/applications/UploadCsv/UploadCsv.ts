@@ -54,8 +54,8 @@ export class UploadCsv extends Operation {
   }
 
   validateRow(row: FileRow) {
-    const { 'Product Name': productName, 'Input Image Urls': inputImageUrls } = row;
-    if (!productName || !inputImageUrls) return false;
+    const {'S. No.' : serialNo ,'Product Name': productName, 'Input Image Urls': inputImageUrls } = row;
+    if (!serialNo || !productName || !inputImageUrls) return false;
 
     const urls = inputImageUrls.split(',').map(url => url.trim());
     const urlPattern = /^(http|https):\/\/[^ "]+$/;

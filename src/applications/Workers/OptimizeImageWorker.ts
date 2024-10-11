@@ -4,13 +4,15 @@ import { IOptimizeService } from "../../domain/IOptimizeService";
 import { createObjectCsvStringifier, createObjectCsvWriter } from "csv-writer";
 import path from "path";
 import multer from "multer";
+import { IWebhookRepository } from "../../domain/IWebhookRepository";
 
 const BATCH_LIMIT = 50;
 @injectable()
 export class OptimizeImageWorker {
 
     constructor(@inject('optimizeService') private optimizeService: IOptimizeService,
-        @inject('imageRepository') private imageRepository: IImageRepository) {
+        @inject('imageRepository') private imageRepository: IImageRepository,
+        @inject('webhookRepository') private webhookRepository: IWebhookRepository) {
     }
 
     async execute() {
@@ -28,7 +30,7 @@ export class OptimizeImageWorker {
 
     async getWebhookPayload(requestId: string) {
         const products = await this.imageRepository.getProductsByRequestId(requestId);
-        const webhookUrl = await this.imageRepository.getWebhookUrlByRequestId(requestId);
+        const webhookUrl = await this.webhookRepository.getWebhookUrlByRequestId(requestId);
 
         if(webhookUrl) {
             const upload = multer({ storage: multer.memoryStorage() });

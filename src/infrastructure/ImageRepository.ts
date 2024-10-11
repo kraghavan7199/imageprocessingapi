@@ -20,8 +20,8 @@ export class ImageRepository implements IImageRepository {
     async addProductImages(data: any, requestId: string): Promise<boolean> {
         for (const product of data) {
             const imageUrls = product['Input Image Urls'].split(',').map((url: string) => url.trim());
-            const queryText = 'INSERT INTO images.productimages(name, image_urls, request_id) VALUES($1, $2, $3) RETURNING id';
-            const values = [product['Product Name'], imageUrls, requestId];
+            const queryText = 'INSERT INTO images.productimages(name, image_urls, request_id, serialNo) VALUES($1, $2, $3, $4) RETURNING id';
+            const values = [product['Product Name'], imageUrls, requestId, product['S. No.']];
             const result = await this.db.query(queryText, values);
         }
         return true;
@@ -53,16 +53,6 @@ export class ImageRepository implements IImageRepository {
     async getProductsByRequestId(requestId: string) {
         const result = await this.db.query('SELECT * FROM images.productimages WHERE request_id = $1', [requestId]);
         return result;
-    }
-
-    async insertWebhookUrl(requestId: string, webhookUrl: string) {
-        const result = await this.db.query('INSERT INTO images.webhookurls (request_id, webhookurl) VALUES ($1, $2) RETURNING id', [requestId, webhookUrl]);
-        return result && result.length;
-    }
-
-    async getWebhookUrlByRequestId(requestId: string) {
-        const result = await this.db.query('SELECT * FROM images.webhookurls WHERE request_id = $1', [requestId]);
-        return result && result[0] && result[0].webhookurl
     }
 
     async sendWebhookCsv(csvBuffer: Buffer, requestId: string, webhookUrl: string) {
