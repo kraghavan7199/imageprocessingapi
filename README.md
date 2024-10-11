@@ -49,3 +49,6 @@ The system uses PostgreSQL with the following tables in the `images` schema:
 - **Version Control**: Git
 - **Onion Architecture**: Impletmented to ensure modularity and scalability by organizing code into layers (domain, application, infrastructure).
 
+## Technical Design Document
+[https://docs.google.com/document/d/1gIfsBHksEhyHFkmCMNWQK-wMJcNRlEVR_jRJCs5CFmM/edit?tab=t.0](https://docs.google.com/document/d/1gIfsBHksEhyHFkmCMNWQK-wMJcNRlEVR_jRJCs5CFmM/edit?tab=t.0)
+
