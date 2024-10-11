@@ -1,4 +1,4 @@
-runtime: nodejs16  # or the latest supported version
+runtime: nodejs20  # or the latest supported version
 handlers:
   - url: /.*
     script: auto
