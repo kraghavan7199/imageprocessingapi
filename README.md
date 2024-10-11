@@ -47,6 +47,7 @@ The system uses PostgreSQL with the following tables in the `images` schema:
 - **Image Optimization**: Sharp
 - **Webhook Delivery**: Axios
 - **Version Control**: Git
+- **Onion Architecture**: Impletmented to ensure modularity and scalability by organizing code into layers (domain, application, infrastructure).
 
 ## Getting Started
 1. **Clone the Repository**
