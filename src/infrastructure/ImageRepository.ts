@@ -2,7 +2,7 @@ import { inject, injectable } from "inversify";
 import { Database } from "../config/Database";
 import { IImageRepository } from "../domain/IImageRepository";
 import FormDataLib from 'form-data';
-import  fs from 'fs';
+import fs from 'fs';
 import axios from "axios";
 
 @injectable()
@@ -11,7 +11,7 @@ export class ImageRepository implements IImageRepository {
     constructor(@inject(Database) private db: Database) { }
 
 
-    async getUnoptimizedProductImagesByRequestId(requestId: string , limit: number) {
+    async getUnoptimizedProductImagesByRequestId(requestId: string, limit: number) {
         const result = await this.db.query('SELECT * FROM images.productimages WHERE ((request_id = $1) AND (optimized_urls IS NULL) ) LIMIT $2', [requestId, limit]);
         return result;
     }
@@ -28,7 +28,7 @@ export class ImageRepository implements IImageRepository {
     }
 
     async addOptimizerJob(requestId: string) {
-        const result = await this.db.query(`INSERT INTO images.optimizerjobs (request_id) VALUES ($1) RETURNING id`,[ requestId]) as any;
+        const result = await this.db.query(`INSERT INTO images.optimizerjobs (request_id) VALUES ($1) RETURNING id`, [requestId]) as any;
         return result[0].id;
     }
 
@@ -37,13 +37,13 @@ export class ImageRepository implements IImageRepository {
         return result && result[0];
     }
 
-    async getRequestStatus(request_id: string): Promise<{pending: string, optimized: string}> {
+    async getRequestStatus(request_id: string): Promise<{ pending: string, optimized: string }> {
         const result = await this.db.query('SELECT COUNT(*) FILTER (WHERE optimized_urls IS NULL) AS pending ,  COUNT(*) FILTER (WHERE optimized_urls IS NOT NULL) AS optimized FROM images.productimages WHERE request_id = $1', [request_id]);
-        return result && result[0] ? result[0] : {pending: 0, optimized: 0};
+        return result && result[0] ? result[0] : { pending: 0, optimized: 0 };
     }
 
     async addOptimizedUrls(optimizedProducts: any) {
-        const result  = await this.db.query('SELECT * FROM images.addoptimizedurls($1)', [optimizedProducts]);
+        const result = await this.db.query('SELECT * FROM images.addoptimizedurls($1)', [optimizedProducts]);
     }
 
     async completeOptimizedJob(requestId: string) {
@@ -56,23 +56,25 @@ export class ImageRepository implements IImageRepository {
     }
 
     async sendWebhookCsv(csvBuffer: Buffer, requestId: string, webhookUrl: string) {
-        console.log(csvBuffer, 'in repor')
         const form = new FormDataLib();
         form.append('file', csvBuffer, {
             filename: `optimized_images_${requestId}.csv`,
             contentType: 'text/csv',
         });
-    
+
         form.append('metadata', JSON.stringify({ requestId: requestId }));
-        const response = await axios.post(webhookUrl, form, {
-            headers: {
-                ...form.getHeaders(),
-            },
-            maxContentLength: Infinity,
-            maxBodyLength: Infinity,
-            timeout: 10000,
-        });
-    
-        return response;
+        try {
+            const response = await axios.post(webhookUrl, form, {
+                headers: {
+                    ...form.getHeaders(),
+                },
+                maxContentLength: Infinity,
+                maxBodyLength: Infinity,
+                timeout: 10000,
+            });
+            return response;
+        } catch (error) {
+            console.log('Invalid Webhook URL Given')
+        }
     }
 }
