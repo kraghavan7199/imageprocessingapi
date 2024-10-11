@@ -1,0 +1,9 @@
+steps:
+  - name: 'node'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        npm install
+  - name: 'gcr.io/google-appengine/node'
+    args: ['gcloud', 'app', 'deploy', 'app.yaml', '--quiet']
