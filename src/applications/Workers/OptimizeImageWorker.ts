@@ -37,6 +37,7 @@ export class OptimizeImageWorker {
             const upload = multer({ storage: multer.memoryStorage() });
             const csvStringifier = createObjectCsvStringifier({
                 header: [
+                    {id: 'serialno', title: 'S. No.'},
                     {id: 'name', title: 'Product Name' },
                     {id: 'image_urls', title: 'Input Image Urls'},
                     {id: 'optimized_urls', title: 'Output Image Urls'}
