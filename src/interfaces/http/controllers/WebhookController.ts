@@ -22,11 +22,4 @@ export class WebhookController extends BaseHttpController {
        await this.registerWebhookUrlFeature.execute(requestId, webhookUrl);
 
     }
-
-    @httpPost('', upload.single('file'))
-    public async test(@request() req: express.Request, @response() res: express.Response) {
-        console.log('for test********************************************', req.file)
-
-    }
-
 }

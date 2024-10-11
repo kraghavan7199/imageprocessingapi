@@ -30,7 +30,6 @@ export class OptimizeImageWorker {
 
     async getWebhookPayload(requestId: string) {
         const products = await this.imageRepository.getProductsByRequestId(requestId);
-        console.log(products , 'in wb hook payload')
         const webhookUrl = await this.webhookRepository.getWebhookUrlByRequestId(requestId);
 
         if(webhookUrl) {
