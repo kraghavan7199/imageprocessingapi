@@ -7,3 +7,5 @@ steps:
         npm install
   - name: 'gcr.io/google-appengine/node'
     args: ['gcloud', 'app', 'deploy', 'app.yaml', '--quiet']
+options:
+  logging: NONE
