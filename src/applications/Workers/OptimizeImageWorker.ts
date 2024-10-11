@@ -6,7 +6,7 @@ import path from "path";
 import multer from "multer";
 import { IWebhookRepository } from "../../domain/IWebhookRepository";
 
-const BATCH_LIMIT = 50;
+const BATCH_LIMIT = 10;
 @injectable()
 export class OptimizeImageWorker {
 
