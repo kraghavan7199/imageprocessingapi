@@ -56,6 +56,7 @@ export class ImageRepository implements IImageRepository {
     }
 
     async sendWebhookCsv(csvBuffer: Buffer, requestId: string, webhookUrl: string) {
+        console.log(csvBuffer, 'in repor')
         const form = new FormDataLib();
         form.append('file', csvBuffer, {
             filename: `optimized_images_${requestId}.csv`,
