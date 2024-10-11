@@ -32,7 +32,7 @@ export class OptimizeService implements IOptimizeService {
                     compressedImage = await sharp(response.data).jpeg({ quality: 50 }).toBuffer();
                 } catch (error) {
                     
-                    const defaultUrl = 'https://storage.googleapis.com/images-for-processing/no_image.jpg';
+                    const defaultUrl = 'https://storage.googleapis.com/images-for-processing/no-image.jpg';
                     const defaultResponse = await axios.get(defaultUrl, { responseType: 'arraybuffer' });
                     compressedImage = await sharp(defaultResponse.data).jpeg({ quality: 50 }).toBuffer();
                 }
